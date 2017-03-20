@@ -14,17 +14,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class Frog extends MovableObject implements ActionListener, KeyListener {
-	
-	
+
+
 
 	private int x,y,direction;
 
-	public Frog(BufferedImage sprite) { // créé un objet grenouille ayant pour
-										// position
-		// de départ les coordonées
+	public Frog(BufferedImage sprite) { 
+		
+		
+	
 
 		MovingObject = sprite.getSubimage(200, 400, 300, 75).getScaledInstance(280, 55, Image.SCALE_DEFAULT);
-		
+
 		JLabel Grenouille = new JLabel(new ImageIcon(this.MovingObject));
 
 
@@ -57,24 +58,23 @@ public class Frog extends MovableObject implements ActionListener, KeyListener {
 		}
 	}
 
-	
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+
 
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+
+
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+	
 	}
 
 }

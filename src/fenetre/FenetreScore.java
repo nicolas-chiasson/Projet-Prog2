@@ -32,160 +32,159 @@ import javax.swing.SwingUtilities;
 import fenetre.FenetreScore.ScorePanel;
 
 public class FenetreScore extends JFrame {
-    public int width = 660;
-    public int height = 600;
+	public int width = 660;
+	public int height = 600;
 
-    public FenetreScore(String title) {
-        super(title);
-        setSize(width, height);
-        setUndecorated(true);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        getContentPane().setBackground(Color.white);
+	public FenetreScore(String title) {
+		super(title);
+		setSize(width, height);
+		setUndecorated(true);
+		setResizable(false);
+		setLocationRelativeTo(null);
+		getContentPane().setBackground(Color.white);
 
-        //Escape should close the window
-        InputMap im = getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        ActionMap am = getRootPane().getActionMap();
+		// Escape should close the window
+		InputMap im = getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		ActionMap am = getRootPane().getActionMap();
 
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "cancel");
-        am.put("cancel", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "cancel");
+		am.put("cancel", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 
-        JLayeredPane lpane = new JLayeredPane();
-        setLayout(new BorderLayout());
-        add(lpane, BorderLayout.CENTER);
-        lpane.setBounds(0, 0, width, height);
-        ScorePanel cp = new ScorePanel();
-        cp.setBounds(0, 0, width, height);
-        add(cp);
-        lpane.add(cp, new Integer(0), 0);
-    }
+		JLayeredPane lpane = new JLayeredPane();
+		setLayout(new BorderLayout());
+		add(lpane, BorderLayout.CENTER);
+		lpane.setBounds(0, 0, width, height);
+		ScorePanel cp = new ScorePanel();
+		cp.setBounds(0, 0, width, height);
+		add(cp);
+		lpane.add(cp, new Integer(0), 0);
+	}
 
-    public static class ScorePanel extends JPanel implements ActionListener {
+	public static class ScorePanel extends JPanel implements ActionListener {
 
-        Image froggerLogo;
-        Image frogavatar;
-        Image[] allImages;
-        private JButton back;
+		Image froggerLogo;
+		Image frogavatar;
+		Image[] allImages;
+		private JButton back;
 
-        public ScorePanel() {
-            setOpaque(false);
-            setLayout(null);
+		public ScorePanel() {
+			setOpaque(false);
+			setLayout(null);
 
-            try {
-                froggerLogo = ImageIO.read(new File("src/textures/frog_logo.jpg")).getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-                frogavatar = ImageIO.read(new File("src/textures/frog_avatar.jpg")).getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-                allImages = new Image[5];
-                for (int i = 0; i < 5; i++) {
-                    Image img = frogavatar;
-                    allImages[i] = img;
-                }
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+			try {
+				froggerLogo = ImageIO.read(new File("src/textures/frog_logo.jpg")).getScaledInstance(80, 80,
+						Image.SCALE_SMOOTH);
+				frogavatar = ImageIO.read(new File("src/textures/frog_avatar.jpg")).getScaledInstance(50, 50,
+						Image.SCALE_SMOOTH);
+				allImages = new Image[5];
+				for (int i = 0; i < 5; i++) {
+					Image img = frogavatar;
+					allImages[i] = img;
+				}
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 
-            JLabel team = new JLabel("High Scores", JLabel.CENTER);
-            team.setFont(new Font("Ravie", Font.BOLD, 32));
-            team.setBounds(0, 0, 500, 40);
-            team.setLocation(640 / 2 - team.getWidth() / 2 + 50, 45);
-            team.setForeground(new Color(251, 102, 8));
-            add(team);
+			JLabel team = new JLabel("High Scores", JLabel.CENTER);
+			team.setFont(new Font("Ravie", Font.BOLD, 32));
+			team.setBounds(0, 0, 500, 40);
+			team.setLocation(640 / 2 - team.getWidth() / 2 + 50, 45);
+			team.setForeground(new Color(251, 102, 8));
+			add(team);
 
-            JLabel shadow = new JLabel("High Scores", JLabel.CENTER);
-            shadow.setFont(new Font("Ravie", Font.BOLD, 32));
-            shadow.setBounds(0, 0, 500, 40);
-            shadow.setLocation(640 / 2 - team.getWidth() / 2 + 50 + 2, 45 + 2);
-            shadow.setForeground(new Color(183, 233, 98));
-            add(shadow);
+			JLabel shadow = new JLabel("High Scores", JLabel.CENTER);
+			shadow.setFont(new Font("Ravie", Font.BOLD, 32));
+			shadow.setBounds(0, 0, 500, 40);
+			shadow.setLocation(640 / 2 - team.getWidth() / 2 + 50 + 2, 45 + 2);
+			shadow.setForeground(new Color(183, 233, 98));
+			add(shadow);
 
-            ArrayList<String> allScores = new ArrayList<>();
-            ArrayList<String> allNames = new ArrayList<>();
+			ArrayList<String> allScores = new ArrayList<>();
+			ArrayList<String> allNames = new ArrayList<>();
 
-            try {
-                FileReader fr = new FileReader("src/files/scores.txt");
-                BufferedReader br = new BufferedReader(fr);
-                FileReader frNames = new FileReader("src/files/names.txt");
-                BufferedReader brNames = new BufferedReader(frNames);
-                for (int i = 0; i < 5; i++) {
-                    allScores.add(br.readLine());
-                }
+			try {
+				FileReader fr = new FileReader("src/files/scores.txt");
+				BufferedReader br = new BufferedReader(fr);
+				FileReader frNames = new FileReader("src/files/names.txt");
+				BufferedReader brNames = new BufferedReader(frNames);
+				for (int i = 0; i < 5; i++) {
+					allScores.add(br.readLine());
+				}
 
-                for (int i = 0; i < 5; i++) {
-                    allNames.add(brNames.readLine());
-                }
+				for (int i = 0; i < 5; i++) {
+					allNames.add(brNames.readLine());
+				}
 
-                frNames.close();
-                brNames.close();
-                br.close();
-                fr.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+				frNames.close();
+				brNames.close();
+				br.close();
+				fr.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 
-            ArrayList<JLabel> lables = new ArrayList<>();
-            lables.add(new JLabel(allNames.get(0), JLabel.LEFT));
-            lables.add(new JLabel(allNames.get(1), JLabel.LEFT));
-            lables.add(new JLabel(allNames.get(2), JLabel.LEFT));
-            lables.add(new JLabel(allNames.get(3), JLabel.LEFT));
-            lables.add(new JLabel(allNames.get(4), JLabel.LEFT));
+			ArrayList<JLabel> lables = new ArrayList<>();
+			lables.add(new JLabel(allNames.get(0), JLabel.LEFT));
+			lables.add(new JLabel(allNames.get(1), JLabel.LEFT));
+			lables.add(new JLabel(allNames.get(2), JLabel.LEFT));
+			lables.add(new JLabel(allNames.get(3), JLabel.LEFT));
+			lables.add(new JLabel(allNames.get(4), JLabel.LEFT));
 
-            lables.add(new JLabel(allScores.get(0), JLabel.LEFT));
-            lables.add(new JLabel(allScores.get(1), JLabel.LEFT));
-            lables.add(new JLabel(allScores.get(2), JLabel.LEFT));
-            lables.add(new JLabel(allScores.get(3), JLabel.LEFT));
-            lables.add(new JLabel(allScores.get(4), JLabel.LEFT));
+			lables.add(new JLabel(allScores.get(0), JLabel.LEFT));
+			lables.add(new JLabel(allScores.get(1), JLabel.LEFT));
+			lables.add(new JLabel(allScores.get(2), JLabel.LEFT));
+			lables.add(new JLabel(allScores.get(3), JLabel.LEFT));
+			lables.add(new JLabel(allScores.get(4), JLabel.LEFT));
 
+			for (int i = 0; i < lables.size(); i++) {
+				JLabel jl = lables.get(i);
+				int X = 140;
+				int Y = (198 + i * 70);
+				jl.setFont(new Font("Snap ITC", Font.BOLD, 25));
+				jl.setForeground(new Color(251, 102, 8));
+				if (i > 4) {
+					X = 400;
+					Y = (198 + (i - 5) * 70);
+					jl.setFont(new Font("Snap ITC", Font.PLAIN, 24));
+					jl.setForeground(new Color(70, 70, 70));
+				}
 
-            for (int i = 0; i < lables.size(); i++) {
-                JLabel jl = lables.get(i);
-                int X = 140;
-                int Y = (198 + i * 70);
-                jl.setFont(new Font("Snap ITC", Font.BOLD, 25));
-                jl.setForeground(new Color(251, 102, 8));
-                if (i > 4) {
-                    X = 400;
-                    Y = (198 + (i - 5) * 70);
-                    jl.setFont(new Font("Snap ITC", Font.PLAIN, 24));
-                    jl.setForeground(new Color(70, 70, 70));
-                }
+				jl.setBounds(0, 0, 400, 22);
+				jl.setLocation(X, Y);
 
+				add(jl);
+			}
 
-                jl.setBounds(0, 0, 400, 22);
-                jl.setLocation(X, Y);
+			back = new JButton("Back");
+			back.addActionListener(this);
+			back.setBorder(BorderFactory.createEmptyBorder());
+			back.setBounds(0, 0, 120, 40);
+			back.setLocation(640 / 2 - 120 / 2, 550);
+			add(back);
 
-                add(jl);
-            }
+		}
 
+		public void actionPerformed(ActionEvent action) {
+			if (action.getSource() == back) {
+				SwingUtilities.getWindowAncestor(this).dispose();
+			}
+		}
 
-            back = new JButton("Back");
-            back.addActionListener(this);
-            back.setBorder(BorderFactory.createEmptyBorder());
-            back.setBounds(0, 0, 120, 40);
-            back.setLocation(640 / 2 - 120 / 2, 550);
-            add(back);
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			Graphics2D g2 = (Graphics2D) g;
+			g2.drawImage(froggerLogo, (getWidth() - froggerLogo.getWidth(this)) / 2 - 135, 25, this);
 
-        }
+			for (int i = 0; i < 5; i++) {
+				g2.drawImage(allImages[i], 60, (180 + i * 70), 50, 50, this);
+			}
 
-        public void actionPerformed(ActionEvent action) {
-            if (action.getSource() == back) {
-                SwingUtilities.getWindowAncestor(this).dispose();
-            }
-        }
+		}
 
-        public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            Graphics2D g2 = (Graphics2D) g;
-            g2.drawImage(froggerLogo, (getWidth() - froggerLogo.getWidth(this)) / 2 - 135, 25, this);
-
-            for (int i = 0; i < 5; i++) {
-                g2.drawImage(allImages[i], 60, (180 + i * 70), 50, 50, this);
-            }
-
-        }
-
-    }
+	}
 }

@@ -50,30 +50,24 @@ public class FenetreMenu extends JFrame implements ActionListener {
 
 		Border emptyBorder = BorderFactory.createEmptyBorder();
 
-
 		this.Start = new JButton("Start");
 		this.Start.addActionListener(this);
 		this.Start.setBorder(emptyBorder);
 		this.Start.setBounds(200, 200, 120, 40);
 		add(this.Start);
-		
 
 		this.HighScore = new JButton("HighScore");
 		this.HighScore.addActionListener(this);
 		this.HighScore.setBorder(emptyBorder);
 		this.HighScore.setBounds(200, 240, 120, 40);
 		add(this.HighScore);
-		
 
 		this.Exit = new JButton("Exit");
 		this.Exit.addActionListener(this);
 		this.Exit.setBorder(emptyBorder);
 		this.Exit.setBounds(200, 280, 120, 40);
 		add(this.Exit);
-		
 
-
-		
 	}
 
 	public void actionPerformed(ActionEvent action) {
