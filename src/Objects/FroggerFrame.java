@@ -17,9 +17,9 @@ public class FroggerFrame extends JFrame {
 	private Image backgroundIMG;
 
 	public FroggerFrame() {
+		//on commence par dessiner le "terrain" de jeu
 		setTitle("Frogger!");
 		setResizable(false);
-
 		setSize(600, 720);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
@@ -60,6 +60,8 @@ public class FroggerFrame extends JFrame {
 		pack();
 		// shows the frame
 		setVisible(true);
+		
+		
 
 		/*
 		 * int tx = 200; int ty = 400; int tw = 300; int th = 75; truck = new

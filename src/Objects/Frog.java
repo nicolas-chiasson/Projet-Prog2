@@ -15,19 +15,13 @@ import javax.swing.JLabel;
 
 public class Frog extends MovableObject implements ActionListener, KeyListener {
 
+	private int x, y, direction;
 
-
-	private int x,y,direction;
-
-	public Frog(BufferedImage sprite) { 
-		
-		
-	
+	public Frog(BufferedImage sprite) {
 
 		MovingObject = sprite.getSubimage(200, 400, 300, 75).getScaledInstance(280, 55, Image.SCALE_DEFAULT);
 
 		JLabel Grenouille = new JLabel(new ImageIcon(this.MovingObject));
-
 
 		Grenouille.setFocusable(true);
 		Grenouille.addKeyListener(this);
@@ -40,7 +34,7 @@ public class Frog extends MovableObject implements ActionListener, KeyListener {
 		this.posY = y;
 
 	}
-
+	//il faut s'assurer que le mouvement de la grenouille se fait avec le bon nombre de pixels par rapport au GameFrame.
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
@@ -58,23 +52,19 @@ public class Frog extends MovableObject implements ActionListener, KeyListener {
 		}
 	}
 
-
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
 
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 
-
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-	
+
 	}
 
 }

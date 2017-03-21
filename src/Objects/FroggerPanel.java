@@ -41,6 +41,7 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 
 	}
 
+	//on dessine les éléments sur le terrain, suffit de les faire bouger maintenant
 	public void paint(Graphics g) {
 		g.drawImage(truck, 300, 372, null);
 		g.drawImage(car, 80, 425, null);
@@ -50,8 +51,11 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 		g.drawImage(bLog, 80, 140, null);
 		g.drawImage(sLog, 80, 195, null);
 		g.drawImage(mLog, 80, 250, null);
+		
 
 	}
+	
+		Frog f1 = new Frog(sprite);
 
 	@Override
 	public void run() {
