@@ -16,15 +16,23 @@ import javax.swing.JLabel;
 public class Frog extends MovableObject implements ActionListener, KeyListener {
 
 	private int x, y, direction;
+	BufferedImage sprite;
 
-	public Frog(BufferedImage sprite) {
-
-		MovingObject = sprite.getSubimage(200, 400, 300, 75).getScaledInstance(280, 55, Image.SCALE_DEFAULT);
-
-		JLabel Grenouille = new JLabel(new ImageIcon(this.MovingObject));
-
+	public Frog() {
+		
+		
+		try {
+			sprite = ImageIO.read(new File("src/resources/sprite.png"));
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+		MovingObject = sprite.getSubimage(0, 0, 75,75).getScaledInstance(100, 100, Image.SCALE_DEFAULT);
+		
+		JLabel Grenouille = new JLabel(new ImageIcon(MovingObject));
+		
 		Grenouille.setFocusable(true);
 		Grenouille.addKeyListener(this);
+		Grenouille.setOpaque(false);
 
 	}
 

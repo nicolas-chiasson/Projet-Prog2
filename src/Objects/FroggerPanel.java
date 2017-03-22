@@ -45,17 +45,21 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 	public void paint(Graphics g) {
 		g.drawImage(truck, 300, 372, null);
 		g.drawImage(car, 80, 425, null);
-
 		g.drawImage(sLog, 80, 30, null);
 		g.drawImage(sLog, 80, 85, null);
 		g.drawImage(bLog, 80, 140, null);
 		g.drawImage(sLog, 80, 195, null);
 		g.drawImage(mLog, 80, 250, null);
 		
+		Frog f1 = new Frog();
+		g.drawImage(f1.MovingObject, 270, 600,null);
+		
 
 	}
-	
-		Frog f1 = new Frog(sprite);
+		//l'initialisation de la grenouille créé des erreurs :(
+		
+		
+		
 
 	@Override
 	public void run() {
