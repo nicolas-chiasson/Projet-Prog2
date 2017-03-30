@@ -50,7 +50,7 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 		g.drawImage(bLog, 80, 140, null);
 		g.drawImage(sLog, 80, 195, null);
 		g.drawImage(mLog, 80, 250, null);
-		
+		//il faut ajouter le KeyListener a la grenouille.
 		Frog f1 = new Frog();
 		g.drawImage(f1.MovingObject, 270, 600,null);
 		

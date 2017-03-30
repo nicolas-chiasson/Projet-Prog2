@@ -26,7 +26,7 @@ public class Frog extends MovableObject implements ActionListener, KeyListener {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-		MovingObject = sprite.getSubimage(0, 0, 75,75).getScaledInstance(100, 100, Image.SCALE_DEFAULT);
+		MovingObject = sprite.getSubimage(0, 0, 50, 80).getScaledInstance(70, 70, Image.SCALE_DEFAULT);
 		
 		JLabel Grenouille = new JLabel(new ImageIcon(MovingObject));
 		
