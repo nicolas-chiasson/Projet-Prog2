@@ -37,6 +37,7 @@ public class FenetreMenu extends JFrame implements ActionListener {
 		setUndecorated(true);
 		setResizable(false);
 		setLayout(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		try {
 			this.backgroundIMG = ImageIO.read(new File("src/resources/startscreen.jpg"));
@@ -47,25 +48,28 @@ public class FenetreMenu extends JFrame implements ActionListener {
 		JLabel background = new JLabel(new ImageIcon(backgroundIMG));
 		add(background);
 		background.setSize(width, height);
-
+		background.setOpaque(false);
 		Border emptyBorder = BorderFactory.createEmptyBorder();
 
 		this.Start = new JButton("Start");
 		this.Start.addActionListener(this);
 		this.Start.setBorder(emptyBorder);
 		this.Start.setBounds(200, 200, 120, 40);
+		this.Start.setOpaque(true);
 		add(this.Start);
 
 		this.HighScore = new JButton("HighScore");
 		this.HighScore.addActionListener(this);
 		this.HighScore.setBorder(emptyBorder);
-		this.HighScore.setBounds(200, 240, 120, 40);
+		this.HighScore.setBounds(200, 250, 120, 40);
+		this.HighScore.setOpaque(true);
 		add(this.HighScore);
 
 		this.Exit = new JButton("Exit");
 		this.Exit.addActionListener(this);
 		this.Exit.setBorder(emptyBorder);
-		this.Exit.setBounds(200, 280, 120, 40);
+		this.Exit.setBounds(200, 300, 120, 40);
+		this.Exit.setOpaque(true);
 		add(this.Exit);
 
 	}
@@ -79,11 +83,11 @@ public class FenetreMenu extends JFrame implements ActionListener {
 		}
 
 		else if (action.getSource() == HighScore) {
-			/*
-			 * ScoreWindow sWindow = new ScoreWindow("Scores");
-			 * sWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			 * sWindow.setVisible(true);
-			 */
+
+			ScoreWindow sWindow = new ScoreWindow("Scores");
+			sWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			sWindow.setVisible(true);
+
 		}
 	}
 

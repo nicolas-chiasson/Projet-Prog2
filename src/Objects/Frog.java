@@ -1,78 +1,52 @@
 package Objects;
 
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+public class Frog extends MovableObject  {
 
-public class Frog extends MovableObject implements ActionListener, KeyListener {
 
-	private int x, y, direction;
-	BufferedImage sprite;
-
-	public Frog() {
+	public Frog(BufferedImage sprite) {
 		
+		MovingObject = sprite.getSubimage(0, 0, 50,75).getScaledInstance(80, 90, Image.SCALE_DEFAULT);
 		
-		try {
-			sprite = ImageIO.read(new File("src/resources/sprite.png"));
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-		}
-		MovingObject = sprite.getSubimage(0, 0, 50, 80).getScaledInstance(70, 70, Image.SCALE_DEFAULT);
-		
-		JLabel Grenouille = new JLabel(new ImageIcon(MovingObject));
-		
-		Grenouille.setFocusable(true);
-		Grenouille.addKeyListener(this);
-		Grenouille.setOpaque(false);
-
 	}
 
 	@Override
-	void move(int x, int y) {
+	public void move(int x, int y) {
 		this.posX = x;
 		this.posY = y;
+		this.boundingBox = new Rectangle(x+15, y+40, 50, 45);
 
 	}
 	//il faut s'assurer que le mouvement de la grenouille se fait avec le bon nombre de pixels par rapport au GameFrame.
-	@Override
-	public void keyPressed(KeyEvent e) {
-		int code = e.getKeyCode();
-		if (code == KeyEvent.VK_UP) {
-			move(posX, posY++);
-		}
-		if (code == KeyEvent.VK_RIGHT) {
-			move(posX++, posY);
-		}
-		if (code == KeyEvent.VK_LEFT) {
-			move(posX--, posY);
-		}
-		if (code == KeyEvent.VK_DOWN) {
-			move(posX, posY--);
-		}
+	
+	void up(){
+		
+		move(posX,posY-GAP_BETWEEN_LANES);
+	}
+	void down(){
+		move(posX,posY+GAP_BETWEEN_LANES);
+	}	
+	void right(){
+		move(posX+LEFT_RIGHT_SHIFT,posY);
+	}	
+	void left(){
+		move(posX-LEFT_RIGHT_SHIFT,posY);
+	}
+	
+	public int getPosX() {
+		return posX;
+	}
+	public int getPosY() {
+		return posY;
+	}
+	public void setBox(int x, int y){
+		this.boundingBox = new Rectangle(x+7, y+9, 24, 24);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-
+	public Rectangle getBoundingBox() {
+		return this.boundingBox;
 	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-
-	}
-
 }
