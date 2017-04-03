@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 public class WaterLane extends Lane {
 
 	protected static int[] LaneInitialY = { 250, 195, 140, 85, 30 };
-	
 
 	public WaterLane(BufferedImage sprite, int laneID, int speed, int direction) {
 		super(laneID, speed, direction);
@@ -31,7 +30,7 @@ public class WaterLane extends Lane {
 				//classe Log qui ressemble a Car
 				laneObj[i] = new Log(sprite, initialX, LaneInitialY[this.laneID]);
 			}else{
-			//deuxiï¿½me type d'objet aquatique a implementer
+			//deuxième type d'objet aquatique a implementer
 				laneObj[i] = new Log(sprite, initialX, LaneInitialY[this.laneID]);
 								
 			}

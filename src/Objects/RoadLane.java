@@ -10,12 +10,11 @@ public class RoadLane extends Lane {
 		super(laneID, speed, direction);
 
 		// Speficie la position X initiale dependant de la direction
-		int rand_shift = (int) (Math.random()*50);
 		int initialX;
-	    if (direction == Lane.LEFT) {
-			initialX = FroggerPanel.WIDTH + rand_shift;
+		if (direction == Lane.LEFT) {
+			initialX = FroggerPanel.WIDTH;
 		} else {
-			initialX = -rand_shift;
+			initialX = 0;
 		}
 
 		for (int i = 0; i < NB_OBJ_PER_LANE; i++) {
@@ -24,7 +23,8 @@ public class RoadLane extends Lane {
 			else
 				initialX -= MIN_GAP + (int) (Math.random() * (MAX_GAP - MIN_GAP));
 
-			int random = (int) (Math.random()*2);
+			// int random = (int) (Math.random()*2);
+			int random = 0;
 			if (random == 0)
 				laneObj[i] = new Car(sprite, initialX, LaneInitialY[this.laneID]);
 			else
@@ -37,6 +37,9 @@ public class RoadLane extends Lane {
 		return laneObj;
 	}
 
+	public void setLaneObj(LaneObject[] laneObj) {
+		this.laneObj = laneObj;
+	}
 
 	public void update() {
 

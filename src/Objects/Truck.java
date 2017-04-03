@@ -9,16 +9,16 @@ public class Truck extends LaneObject {
 	
 	public Truck(BufferedImage sprite, int initialX, int initialY)
 	{
-		MovingObject = sprite.getSubimage(200, 400, 300, 75).getScaledInstance(200, 55, Image.SCALE_DEFAULT);
+		MovingObject = sprite.getSubimage(200, 400, 300, 75).getScaledInstance(280, 55, Image.SCALE_DEFAULT);
 		this.initialX = initialX;
-		move(initialX,initialY);
+		this.posX=initialX;
+		this.posY=initialY;
 	}
 
 	@Override
 	public void move(int x, int y) {
 		posX = x;
 		posY = y;
-		boundingBox = new Rectangle(x, y+8, 200, 50);
 	}
 
 	public void restart() {
@@ -35,10 +35,15 @@ public class Truck extends LaneObject {
 		return initialX;
 	}
 	
+	
+	//TODO: trouver les dimensions exactes du sprite
+	public void setBox(int x, int y){
+		this.boundingBox = new Rectangle(x+7, y+9, 60, 60);
+	}
 
 	@Override
 	public Rectangle getBoundingBox() {
 		// TODO Auto-generated method stub
-		return boundingBox;
+		return null;
 	}
 }
