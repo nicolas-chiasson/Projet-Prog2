@@ -10,14 +10,14 @@ public class Car extends LaneObject {
 	public Car(BufferedImage sprite, int initialX, int initialY){
 		MovingObject = sprite.getSubimage(300, 480, 145, 75).getScaledInstance(135, 55, Image.SCALE_DEFAULT);
 		this.initialX = initialX;
-		this.posX=initialX;
-		this.posY=initialY;
+		move(initialX,initialY);
 	}
 
 	@Override
 	public void move(int x, int y) {
 		this.posX = x;
 		this.posY = y;
+		this.boundingBox = new Rectangle(posX, posY+7, 135,50);
 	}
 	
 	public int getPosX() {
@@ -38,7 +38,7 @@ public class Car extends LaneObject {
 	@Override
 	public Rectangle getBoundingBox() {
 		// TODO Auto-generated method stub
-		return null;
+		return boundingBox;
 	}
 	
 }

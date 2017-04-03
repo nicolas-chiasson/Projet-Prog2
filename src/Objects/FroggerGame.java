@@ -1,49 +1,40 @@
 
 package Objects;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import interactionsObjetsGrenouille.TimeCounter;
-import interactionsObjetsGrenouille.detecteurCollision;
+import collision.detecteurCollision;
 
-public class FroggerGame{
+public class FroggerGame {
 
-	public static final int PLAYING = 0, PLAYER_WINS = 2, MAX_LIFE_TIME = 60;
+	public static final int MAX_LIFE_TIME = 50;
 	public static boolean DEAD = false;
 	public static boolean WIN = false;
 	public static final int frogInitialX = 270, frogInitialY = 612;
-	
 
-	int status, lives;
-	protected int startLifeTime;
+	int lives, startLifeTime;
 	boolean reachedMiddle;
 	private Frog frog;
 	private WaterLane[] waterLanes;
 	private RoadLane[] roadLanes;
 	private BufferedImage sprite;
-	
-	
 
 	public FroggerGame() {
-		status = FroggerGame.PLAYING;
+		
 		reachedMiddle = false;
-		lives = 3;		
-		
-		
-		
+		lives = 3;
 
 		try {
 			sprite = ImageIO.read(new File("src/resources/sprite.png"));
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 		frog = new Frog(sprite);
 		frog.move(frogInitialX, frogInitialY);
 
@@ -63,15 +54,13 @@ public class FroggerGame{
 				roadLanes[i] = new RoadLane(sprite, i, laneSpeed, Lane.LEFT);
 			}
 		}
-	
-		for (int t = 0; t < 10; t++){ // calls update on all lanes before
-									// loading game
+
+		for (int t = 0; t < 1000; t++) // calls update on all lanes before
+										// loading game
 			update();
-			
-			}
 		
-		
-		
+		startLifeTime = (int) System.currentTimeMillis();
+
 
 	}
 
@@ -90,29 +79,22 @@ public class FroggerGame{
 	public void setRoadLanes(RoadLane[] roadLanes) {
 		this.roadLanes = roadLanes;
 	}
-	
-	
-		// TODO Auto-generated method stub
-		
-	
 
 	void update() {
 		
-		//on pense qu'il faut mettre la décrémentation du temps ici mais on sait pas comment.
-	
+		//on pense qu'il faut mettre la dï¿½crï¿½mentation du temps ici mais on sait pas comment.
 		
+		getTimeLeft();
 		for (int u = 0; u < roadLanes.length; u++)
+		{
 			roadLanes[u].update();
-		for (int y = 0; y < roadLanes.length; y++)
 			runChecks();
+		}
 		for (int z = 0; z < waterLanes.length; z++)
+		{
 			waterLanes[z].update();
-		for (int a = 0; a < waterLanes.length; a++)
 			runChecks();
-	}
-
-	public int getStatus() {
-		return status;
+		}
 	}
 
 	public int getLives() {
@@ -124,12 +106,17 @@ public class FroggerGame{
 	}
 
 	public int getTimeLeft() {
-		return startLifeTime;
-		
-		}
+		int time = (int) (MAX_LIFE_TIME - 0.001*((int) System.currentTimeMillis()-startLifeTime));
+		if(time<=0)
+			time = 0;
+		return time;
+	
+	}
 
 	void playerDeath() {
-		lives--;
+		lives--;		
+		frog.move(frogInitialX, frogInitialY);
+
 		if (lives > 0) {
 			frog.move(frogInitialX, frogInitialY);
 		} else {
@@ -140,8 +127,14 @@ public class FroggerGame{
 	void carCheck() {
 		// todo kills player when contacting car
 
-		if (detecteurCollision.Collision(this.getFrog(), this.getRoadLanes())) {
+		if (detecteurCollision.collisionCheck(this.getFrog(), this.getRoadLanes())) 
+		{
 			playerDeath();
+			System.out.println("OUCH");
+		}
+		else
+		{
+
 		}
 
 	}
@@ -150,25 +143,18 @@ public class FroggerGame{
 		// todo moves player if on log with log, otherwise kills
 	}
 
-	void turtleCheck() {
-		// todo moves player with non-down turtle, otherwise kills
-	}
 
 	void checkifThePlayerWin() {
 		if (this.frog.getPosY() < 10) {
 			WIN = true;
 			frog.move(frogInitialX, frogInitialY);
-		
-			System.out.println("YOU WIN");
 		}
 	}
 
 	void runChecks() {
-		// carCheck();
+		carCheck();
 		checkifThePlayerWin();
 
 	}
-
-	
 
 }

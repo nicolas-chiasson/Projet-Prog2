@@ -17,6 +17,7 @@ public class Frog extends MovableObject  {
 	public void move(int x, int y) {
 		this.posX = x;
 		this.posY = y;
+		this.boundingBox = new Rectangle(x+15, y+40, 50, 45);
 
 	}
 	//il faut s'assurer que le mouvement de la grenouille se fait avec le bon nombre de pixels par rapport au GameFrame.
@@ -46,6 +47,6 @@ public class Frog extends MovableObject  {
 	}
 
 	public Rectangle getBoundingBox() {
-		return boundingBox;
+		return this.boundingBox;
 	}
 }

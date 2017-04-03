@@ -4,8 +4,8 @@ public class Lane {
 
 	public static final int NB_OBJ_PER_LANE = 3;
 	public static final int RIGHT = 0, LEFT = 1;
-	public static final int MAX_GAP = 1000;
-	public static final int MIN_GAP = 800;
+	public static final int MAX_GAP = 300;
+	public static final int MIN_GAP = 400;
 	
 	protected int laneID;
 	protected int speed;
@@ -36,7 +36,7 @@ public class Lane {
 
 	
 	public LaneObject[] getLaneObj() {
-	return laneObj;
+		return laneObj;
 	}
 	
 

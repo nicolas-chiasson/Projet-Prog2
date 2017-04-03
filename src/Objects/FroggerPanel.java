@@ -1,10 +1,12 @@
 package Objects;
 
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -84,23 +86,29 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 		g.setColor(Color.RED);
 	    for (int i = 0; i < game.getLives(); i++) 
 	    {
-	    	g.drawString("I", 500 + i * 30, getHeight() - 50);
+	    	g.drawString("♥", 500 + i * 30, getHeight() - 50);
 	    }
 	   
 	    g.drawImage(game.getFrog().MovingObject, game.getFrog().getPosX(), game.getFrog().getPosY(), null);
-	    
+		Rectangle fr = game.getFrog().getBoundingBox();
+		g.drawRect((int) fr.getX(),(int) fr.getY(),(int) fr.getWidth(),(int) fr.getHeight());
 	    
 		for(int i = 0 ; i<5 ; i++){
 			//show cars in roadlanes
 			for(int j = 0; j < Lane.NB_OBJ_PER_LANE ; j++)
 			{
-				if(game.getRoadLanes()[i].getDirection() == Lane.LEFT && game.getRoadLanes()[i].laneObj[j].getPosX() < 0) 
-					game.getRoadLanes()[i].laneObj[j].move(game.getRoadLanes()[i].getLaneObj()[j].getInitialX(), game.getRoadLanes()[i].laneObj[j].getPosY());
+				if(game.getRoadLanes()[i].getDirection() == Lane.LEFT && game.getRoadLanes()[i].laneObj[j].getBoundingBox().getX()+game.getRoadLanes()[i].laneObj[j].getBoundingBox().getWidth()  < 0) 
+					game.getRoadLanes()[i].laneObj[j].move(game.getRoadLanes()[i].getLaneObj()[j].getInitialX() + (int)game.getRoadLanes()[i].laneObj[j].getBoundingBox().getWidth(), game.getRoadLanes()[i].laneObj[j].getPosY());
+				
+				
 				if(game.getRoadLanes()[i].getDirection() == Lane.RIGHT && game.getRoadLanes()[i].laneObj[j].getPosX() > FroggerPanel.WIDTH)
-					game.getRoadLanes()[i].laneObj[j].move(game.getRoadLanes()[i].getLaneObj()[j].getInitialX(), game.getRoadLanes()[i].laneObj[0].getPosY());
+					game.getRoadLanes()[i].laneObj[j].move(game.getRoadLanes()[i].getLaneObj()[j].getInitialX()-(int)game.getRoadLanes()[i].laneObj[j].getBoundingBox().getWidth(), game.getRoadLanes()[i].laneObj[0].getPosY());
 				
 				g.drawImage(game.getRoadLanes()[i].getLaneObj()[j].MovingObject, game.getRoadLanes()[i].laneObj[j].getPosX(), game.getRoadLanes()[i].LaneInitialY[i], null);
 				//System.out.print( game.getRoadLanes()[i].laneObj[j].getPosX()+"," +game.getRoadLanes()[i].LaneInitialY[i] +"   ");
+				Rectangle r = game.getRoadLanes()[i].getLaneObj()[j].getBoundingBox();
+				g.drawRect((int) r.getX(),(int) r.getY(),(int) r.getWidth(),(int) r.getHeight());
+
 			}
 				//show logs in water lanes
 			for(int d = 0; d < Lane.NB_OBJ_PER_LANE; d++){
@@ -111,7 +119,7 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 					
 				g.drawImage(game.getWaterLanes()[i].getLaneObj()[d].MovingObject, game.getWaterLanes()[i].laneObj[d].getPosX(), game.getWaterLanes()[i].LaneInitialY[i], null);
 			}
-			
+			//System.out.println();
 		}
 		
 	}
@@ -154,6 +162,15 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 		while(true){
 			update();
 			repaint();
+			if(game.DEAD){
+				fenetre.ScoreWindow score = new fenetre.ScoreWindow("Frogger Score");
+			}
+			if(game.WIN){
+				System.out.println("YOU WIN");
+				fenetre.ScoreWindow score = new fenetre.ScoreWindow("Frogger Score");
+
+				game.WIN =false;
+			}
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
