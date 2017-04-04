@@ -7,9 +7,14 @@ import java.awt.image.BufferedImage;
 public class Truck extends LaneObject {
 
 	
-	public Truck(BufferedImage sprite, int initialX, int initialY)
+	public Truck(BufferedImage sprite, int direction, int initialX, int initialY)
 	{
-		MovingObject = sprite.getSubimage(200, 400, 300, 75).getScaledInstance(200, 55, Image.SCALE_DEFAULT);
+		
+		if(direction == Lane.RIGHT)
+			MovingObject = sprite.getSubimage(200, 400, 300, 75).getScaledInstance(200, 55, Image.SCALE_DEFAULT);
+		else
+			MovingObject = sprite.getSubimage(130, 80, 145, 75).getScaledInstance(200, 55, Image.SCALE_DEFAULT);
+
 		this.initialX = initialX;
 		move(initialX,initialY);
 	}
@@ -21,9 +26,7 @@ public class Truck extends LaneObject {
 		boundingBox = new Rectangle(x, y+8, 200, 50);
 	}
 
-	public void restart() {
-		
-	}
+
 	
 	public int getPosX() {
 		return posX;

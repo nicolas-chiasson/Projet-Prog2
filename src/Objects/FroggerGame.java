@@ -16,47 +16,45 @@ public class FroggerGame {
 	public static boolean DEAD = false;
 	public static boolean WIN = false;
 	public static final int frogInitialX = 270, frogInitialY = 612;
+	private int lives, startLifeTime, laneSpeed, level;
 
-	int lives, startLifeTime;
-	boolean reachedMiddle;
 	private Frog frog;
 	private WaterLane[] waterLanes;
 	private RoadLane[] roadLanes;
-	private BufferedImage sprite;
+	private BufferedImage sprite, sprite_r;
 
 	public FroggerGame() {
 		
-		reachedMiddle = false;
 		lives = 3;
 
 		try {
 			sprite = ImageIO.read(new File("src/resources/sprite.png"));
+			sprite_r = ImageIO.read(new File("src/resources/sprite_reverse.png"));
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 
-		frog = new Frog(sprite);
+		frog = new Frog(sprite,sprite_r);
 		frog.move(frogInitialX, frogInitialY);
 
 		// log and car lanes -------------
 		roadLanes = new RoadLane[5];
 		waterLanes = new WaterLane[5];
-
-		int laneSpeed = 5;
-
+		
 		// Creation des lanes
 		for (int i = 0; i < roadLanes.length; i++) {
 			if (i % 2 == 1) {
-				waterLanes[i] = new WaterLane(sprite, i, laneSpeed, Lane.RIGHT);
-				roadLanes[i] = new RoadLane(sprite, i, laneSpeed, Lane.RIGHT);
+				waterLanes[i] = new WaterLane(sprite, i, 1, Lane.RIGHT);
+				roadLanes[i] = new RoadLane(sprite, i, 1, Lane.RIGHT);
 			} else {
-				waterLanes[i] = new WaterLane(sprite, i, laneSpeed, Lane.LEFT);
-				roadLanes[i] = new RoadLane(sprite, i, laneSpeed, Lane.LEFT);
+				waterLanes[i] = new WaterLane(sprite, i, 1, Lane.LEFT);
+				roadLanes[i] = new RoadLane(sprite_r, i, 1, Lane.LEFT);
 			}
 		}
-
-		for (int t = 0; t < 1000; t++) // calls update on all lanes before
-										// loading game
+		
+		setLevel(1);
+		
+		for (int t = 0; t < 500; t++) // calls update on all lanes before
 			update();
 		
 		startLifeTime = (int) System.currentTimeMillis();
@@ -64,6 +62,24 @@ public class FroggerGame {
 
 	}
 
+	public void setLevel(int lvl){
+		level = lvl;
+		laneSpeed = lvl+2;
+		
+		for (int i = 0; i < roadLanes.length; i++) 
+		{
+			int rand_speed_shift = -2 + (int) (Math.random()*5);
+			waterLanes[i].setSpeed(laneSpeed+rand_speed_shift);
+			roadLanes[i].setSpeed(laneSpeed+rand_speed_shift);
+			
+		}
+	}
+	
+	public int getLevel()
+	{
+		return level;
+	}
+	
 	public WaterLane[] getWaterLanes() {
 		return waterLanes;
 	}
@@ -81,10 +97,7 @@ public class FroggerGame {
 	}
 
 	void update() {
-		
-		//on pense qu'il faut mettre la d�cr�mentation du temps ici mais on sait pas comment.
-		
-		getTimeLeft();
+
 		for (int u = 0; u < roadLanes.length; u++)
 		{
 			roadLanes[u].update();
@@ -116,31 +129,28 @@ public class FroggerGame {
 	void playerDeath() {
 		lives--;		
 		frog.move(frogInitialX, frogInitialY);
+		frog.setFrogImageUp();
+		frog.setCurrentLane(0);
 
-		if (lives > 0) {
-			frog.move(frogInitialX, frogInitialY);
-		} else {
+		if (lives <= 0) {
 			DEAD = true; // my life, nicolas.
 		}
 	}
 
 	void carCheck() {
-		// todo kills player when contacting car
-
-		if (detecteurCollision.collisionCheck(this.getFrog(), this.getRoadLanes())) 
+		//  Tue le joueur quand une collision n'est pas detectee
+		if (detecteurCollision.carCheck(this.getFrog(), this.getRoadLanes())) 
 		{
 			playerDeath();
-			System.out.println("OUCH");
 		}
-		else
-		{
-
-		}
-
 	}
 
 	void logCheck() {
-		// todo moves player if on log with log, otherwise kills
+		if (!detecteurCollision.logCheck(this.getFrog(), this.getWaterLanes())) 
+		{
+			// Empeche de mourir pour le moment
+			playerDeath();
+		}
 	}
 
 
@@ -148,11 +158,14 @@ public class FroggerGame {
 		if (this.frog.getPosY() < 10) {
 			WIN = true;
 			frog.move(frogInitialX, frogInitialY);
+			frog.setFrogImageUp();
+			frog.setCurrentLane(0);
 		}
 	}
 
 	void runChecks() {
 		carCheck();
+		logCheck();
 		checkifThePlayerWin();
 
 	}

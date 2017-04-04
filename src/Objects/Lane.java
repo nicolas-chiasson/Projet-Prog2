@@ -29,6 +29,9 @@ public class Lane {
 		return speed;
 	}
 
+	public void setSpeed(int speed){
+		this.speed = speed;
+	}
 
 	public int getDirection() {
 		return direction;

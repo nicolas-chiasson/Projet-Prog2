@@ -9,7 +9,9 @@ import Objects.Lane;
 
 public class detecteurCollision {
 	
-	public static boolean collisionCheck(Frog frog, Lane[] items){
+	public static Area inter = new Area();
+	
+	public static boolean carCheck(Frog frog, Lane[] items){
 		
 		for(Lane item : items){
 			for(int i = 0; i< Lane.NB_OBJ_PER_LANE; i++){
@@ -22,6 +24,42 @@ public class detecteurCollision {
 			}
 		}
 		return false;
+	}
+	
+	
+	// Water lane ID go from 7 to 11
+	public static boolean logCheck(Frog frog, Lane[] items){
+		boolean touchFlag = false;
+		inter = new Area();
+		if(frog.getCurrentLane()>=7 && frog.getCurrentLane()<=11)
+		{
+			for(Lane item : items){
+				for(int i = 0; i< Lane.NB_OBJ_PER_LANE; i++){
+					inter = new Area(item.getLaneObj()[i].getBoundingBox());
+					inter.intersect(new Area(frog.getBoundingBox()));
+						
+				if(!inter.isEmpty())
+				{
+					touchFlag = true;
+
+					if(item.getDirection() == Lane.LEFT)
+						frog.moveLeftOnLog(item.getSpeed());
+						//frog.move((int) item.getLaneObj()[i].getBoundingBox().getX()+(int) (item.getLaneObj()[i].getBoundingBox().getWidth()/2) , frog.getPosY());
+					else	
+						frog.moveRightOnLog(item.getSpeed());
+						//frog.move((int)(frog.getBoundingBox().getWidth()/2)+(int) item.getLaneObj()[i].getBoundingBox().getX()+(int) (item.getLaneObj()[i].getBoundingBox().getWidth()/2) -(int)(frog.getBoundingBox().getWidth()/2), frog.getPosY());
+				}
+			}
+			
+		}
+		}
+		else
+		{
+			touchFlag = true;
+		}
+
+		return touchFlag;
+		
 	}
 
 }

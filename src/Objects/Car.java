@@ -7,8 +7,13 @@ import java.awt.image.BufferedImage;
 public class Car extends LaneObject {
 
 	
-	public Car(BufferedImage sprite, int initialX, int initialY){
-		MovingObject = sprite.getSubimage(300, 480, 145, 75).getScaledInstance(135, 55, Image.SCALE_DEFAULT);
+	public Car(BufferedImage sprite, int direction, int initialX, int initialY){
+		
+		if(direction == Lane.RIGHT)
+			MovingObject = sprite.getSubimage(300, 480, 145, 75).getScaledInstance(135, 55, Image.SCALE_DEFAULT);
+		else
+			MovingObject = sprite.getSubimage(160, 7, 145, 75).getScaledInstance(135, 55, Image.SCALE_DEFAULT);
+
 		this.initialX = initialX;
 		move(initialX,initialY);
 	}
@@ -17,7 +22,7 @@ public class Car extends LaneObject {
 	public void move(int x, int y) {
 		this.posX = x;
 		this.posY = y;
-		this.boundingBox = new Rectangle(posX, posY+7, 135,50);
+		this.boundingBox = new Rectangle(posX, posY+7, 125, 40);
 	}
 	
 	public int getPosX() {

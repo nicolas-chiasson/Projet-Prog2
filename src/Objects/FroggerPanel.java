@@ -19,8 +19,12 @@ import java.util.Timer;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import collision.detecteurCollision;
+import fenetre.ScoreWindow;
 
 public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 
@@ -59,13 +63,7 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-/*
-		truck = sprite.getSubimage(200, 400, 300, 75).getScaledInstance(280, 55, Image.SCALE_DEFAULT);
-		car = sprite.getSubimage(300, 480, 145, 75).getScaledInstance(135, 55, Image.SCALE_DEFAULT);
-		sLog = sprite.getSubimage(380, 240, 200, 75).getScaledInstance(125, 70, Image.SCALE_DEFAULT);
-		mLog = sprite.getSubimage(380, 240, 200, 75).getScaledInstance(175, 70, Image.SCALE_DEFAULT);
-		bLog = sprite.getSubimage(380, 240, 200, 75).getScaledInstance(250, 70, Image.SCALE_DEFAULT);
-*/
+
 		setOpaque(false);
 		addKeyListener(this);	
 		setFocusable(true);
@@ -78,9 +76,9 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 	public void paint(Graphics g) {
 		
 
-		g.setFont(new Font("Arial",Font.CENTER_BASELINE,32));
+		g.setFont(new Font("Arial",Font.CENTER_BASELINE,20));
         int time = game.getTimeLeft();
-        g.drawString("Time Left: "+time, 10, getHeight() - 50);
+        g.drawString("Level "+game.getLevel()+": Time Left: "+time, 10, getHeight() - 50);
         
   		g.drawString("Lives: ", 400, getHeight()-50);
 		g.setColor(Color.RED);
@@ -89,9 +87,6 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 	    	g.drawString("♥", 500 + i * 30, getHeight() - 50);
 	    }
 	   
-	    g.drawImage(game.getFrog().MovingObject, game.getFrog().getPosX(), game.getFrog().getPosY(), null);
-		Rectangle fr = game.getFrog().getBoundingBox();
-		g.drawRect((int) fr.getX(),(int) fr.getY(),(int) fr.getWidth(),(int) fr.getHeight());
 	    
 		for(int i = 0 ; i<5 ; i++){
 			//show cars in roadlanes
@@ -102,25 +97,35 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 				
 				
 				if(game.getRoadLanes()[i].getDirection() == Lane.RIGHT && game.getRoadLanes()[i].laneObj[j].getPosX() > FroggerPanel.WIDTH)
-					game.getRoadLanes()[i].laneObj[j].move(game.getRoadLanes()[i].getLaneObj()[j].getInitialX()-(int)game.getRoadLanes()[i].laneObj[j].getBoundingBox().getWidth(), game.getRoadLanes()[i].laneObj[0].getPosY());
+					game.getRoadLanes()[i].laneObj[j].move(game.getRoadLanes()[i].getLaneObj()[j].getInitialX()-(int)game.getRoadLanes()[i].laneObj[j].getBoundingBox().getWidth(), game.getRoadLanes()[i].laneObj[j].getPosY());
 				
 				g.drawImage(game.getRoadLanes()[i].getLaneObj()[j].MovingObject, game.getRoadLanes()[i].laneObj[j].getPosX(), game.getRoadLanes()[i].LaneInitialY[i], null);
-				//System.out.print( game.getRoadLanes()[i].laneObj[j].getPosX()+"," +game.getRoadLanes()[i].LaneInitialY[i] +"   ");
-				Rectangle r = game.getRoadLanes()[i].getLaneObj()[j].getBoundingBox();
-				g.drawRect((int) r.getX(),(int) r.getY(),(int) r.getWidth(),(int) r.getHeight());
+
+//				Rectangle r = game.getRoadLanes()[i].getLaneObj()[j].getBoundingBox();
+//				g.drawRect((int) r.getX(),(int) r.getY(),(int) r.getWidth(),(int) r.getHeight());
 
 			}
 				//show logs in water lanes
 			for(int d = 0; d < Lane.NB_OBJ_PER_LANE; d++){
-				if(game.getWaterLanes()[i].getDirection() == Lane.LEFT && game.getWaterLanes()[i].laneObj[d].getPosX() < 0)
-					game.getWaterLanes()[i].laneObj[d].move(game.getWaterLanes()[i].getLaneObj()[d].getInitialX(), game.getWaterLanes()[i].getLaneObj()[d].getPosY());
+				if(game.getWaterLanes()[i].getDirection() == Lane.LEFT && game.getWaterLanes()[i].laneObj[d].getBoundingBox().getX()+game.getWaterLanes()[i].laneObj[d].getBoundingBox().getWidth() < 0)
+					game.getWaterLanes()[i].laneObj[d].move(game.getWaterLanes()[i].getLaneObj()[d].getInitialX() + (int)game.getWaterLanes()[i].laneObj[d].getBoundingBox().getWidth(), game.getWaterLanes()[i].laneObj[d].getPosY());
 				if(game.getWaterLanes()[i].getDirection() == Lane.RIGHT && game.getWaterLanes()[i].laneObj[d].getPosX() > FroggerPanel.WIDTH)
-					game.getWaterLanes()[i].laneObj[d].move(game.getWaterLanes()[i].getLaneObj()[d].getInitialX(), game.getWaterLanes()[i].laneObj[0].getPosY());
+					game.getWaterLanes()[i].laneObj[d].move(game.getWaterLanes()[i].getLaneObj()[d].getInitialX(), game.getWaterLanes()[i].laneObj[d].getPosY());
 					
 				g.drawImage(game.getWaterLanes()[i].getLaneObj()[d].MovingObject, game.getWaterLanes()[i].laneObj[d].getPosX(), game.getWaterLanes()[i].LaneInitialY[i], null);
+				Rectangle rl = game.getWaterLanes()[i].getLaneObj()[d].getBoundingBox();
+				g.drawRect((int) rl.getX(),(int) rl.getY(),(int) rl.getWidth(),(int) rl.getHeight());
+
 			}
-			//System.out.println();
+			if(!detecteurCollision.inter.isEmpty()){
+	//			g.drawRect((int)detecteurCollision.inter.getBounds().getX(), (int)detecteurCollision.inter.getBounds().getY(), (int)detecteurCollision.inter.getBounds().getWidth(), (int)detecteurCollision.inter.getBounds().getHeight());
+			}
+			
 		}
+		
+		g.drawImage(game.getFrog().MovingObject, game.getFrog().getPosX(), game.getFrog().getPosY(), null);
+		Rectangle fr = game.getFrog().getBoundingBox();
+		g.drawRect((int) fr.getX(),(int) fr.getY(),(int) fr.getWidth(),(int) fr.getHeight());
 		
 	}
 
@@ -140,7 +145,6 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 			game.getFrog().down();
 		}
 		repaint();
-
 	}
 
 
@@ -162,17 +166,25 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 		while(true){
 			update();
 			repaint();
-			if(game.DEAD){
-				fenetre.ScoreWindow score = new fenetre.ScoreWindow("Frogger Score");
-			}
-			if(game.WIN){
-				System.out.println("YOU WIN");
-				fenetre.ScoreWindow score = new fenetre.ScoreWindow("Frogger Score");
+			try {
+			if(game.DEAD)
+			{
+				ScoreWindow sWindow = new ScoreWindow("Scores");
+				sWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				sWindow.setVisible(true);	
+                reset();
 
+				game.DEAD = false;
+			}
+			if(game.WIN)
+			{
+				System.out.println("YOU WIN");
+				game.setLevel(game.getLevel()+1);
+	
 				game.WIN =false;
 			}
-			try {
-				Thread.sleep(20);
+		
+			Thread.sleep(20);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

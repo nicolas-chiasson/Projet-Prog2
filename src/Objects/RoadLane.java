@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class RoadLane extends Lane {
 
-	public static final int[] LaneInitialY = { 592, 540, 488, 430, 372 };
+	public static final int[] LaneInitialY = { 592, 540, 488, 430, 375 };
 
 	public RoadLane(BufferedImage sprite, int laneID, int speed, int direction) {
 		super(laneID, speed, direction);
@@ -26,9 +26,9 @@ public class RoadLane extends Lane {
 
 			int random = (int) (Math.random()*2);
 			if (random == 0)
-				laneObj[i] = new Car(sprite, initialX, LaneInitialY[this.laneID]);
+				laneObj[i] = new Car(sprite, direction, initialX, LaneInitialY[this.laneID]);
 			else
-				laneObj[i] = new Truck(sprite, initialX, LaneInitialY[this.laneID]);
+				laneObj[i] = new Truck(sprite, direction, initialX, LaneInitialY[this.laneID]);
 		}
 
 	}
@@ -36,7 +36,6 @@ public class RoadLane extends Lane {
 	public LaneObject[] getLaneObj() {
 		return laneObj;
 	}
-
 
 	public void update() {
 
