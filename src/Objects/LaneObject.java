@@ -1,7 +1,6 @@
 package Objects;
 
 import java.awt.Rectangle;
-import java.awt.Shape;
 
 public abstract class LaneObject extends MovableObject {
 

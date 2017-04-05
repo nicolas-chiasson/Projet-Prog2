@@ -14,7 +14,7 @@ import javax.swing.KeyStroke;
 @SuppressWarnings("serial")
 public class ScoreWindow extends JFrame {
 
-	// on déclare la taille de la fenetre pour changer ces valeurs plus
+	// on dï¿½clare la taille de la fenetre pour changer ces valeurs plus
 	// facilement
 	protected int width = 700;
 	protected int height = 800;
@@ -29,8 +29,8 @@ public class ScoreWindow extends JFrame {
 		// appuyer sur escape ferme la fenetre
 		InputMap im = getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap am = getRootPane().getActionMap();
-		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "cancel");
-		am.put("cancel", new AbstractAction() {
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Cancel");
+		am.put("Cancel", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();

@@ -2,15 +2,10 @@ package Objects;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.io.*;
 
 import javax.imageio.ImageIO;
@@ -56,7 +51,7 @@ public class FroggerFrame extends JFrame implements ActionListener {
 		int frameWidth = panel.getWidth() + (frameInsets.left + frameInsets.right);
 		int frameHeight = panel.getHeight() + (frameInsets.top + frameInsets.bottom);
 		// sets the frame's size
-		setPreferredSize(new Dimension(frameWidth, frameHeight));
+		//setPreferredSize(new Dimension(frameWidth, frameHeight));
 		// turns off the layout options
 		setLayout(null);
 		// adds the panel to the frame

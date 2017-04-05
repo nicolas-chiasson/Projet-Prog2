@@ -1,11 +1,8 @@
 package fenetre;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -58,7 +55,7 @@ public class FenetreMenu extends JFrame implements ActionListener {
 		this.Start.setOpaque(true);
 		add(this.Start);
 
-		this.HighScore = new JButton("HighScore");
+		this.HighScore = new JButton("Recent Scores");
 		this.HighScore.addActionListener(this);
 		this.HighScore.setBorder(emptyBorder);
 		this.HighScore.setBounds(200, 250, 120, 40);
@@ -74,6 +71,7 @@ public class FenetreMenu extends JFrame implements ActionListener {
 
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent action) {
 		if (action.getSource() == this.Exit) {
 			System.exit(0);

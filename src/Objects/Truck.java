@@ -28,12 +28,15 @@ public class Truck extends LaneObject {
 
 
 	
+	@Override
 	public int getPosX() {
 		return posX;
 	}
+	@Override
 	public int getPosY() {
 		return posY;
 	}
+	@Override
 	public int getInitialX(){
 		return initialX;
 	}

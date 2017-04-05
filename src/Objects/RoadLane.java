@@ -19,13 +19,17 @@ public class RoadLane extends Lane {
 		}
 
 		for (int i = 0; i < NB_OBJ_PER_LANE; i++) {
-			if (direction == Lane.LEFT)
-				initialX += MIN_GAP + (int) (Math.random() * (MAX_GAP - MIN_GAP));
-			else
-				initialX -= MIN_GAP + (int) (Math.random() * (MAX_GAP - MIN_GAP));
-
-			int random = (int) (Math.random()*2);
-			if (random == 0)
+			if(i>0)
+			{
+				if (direction == Lane.LEFT)
+					initialX +=  /*laneObj[i-1].getBoundingBox().getMaxX()*/ + MIN_GAP + (int) (Math.random() * (MAX_GAP - MIN_GAP));
+				else
+					initialX -= /*laneObj[i-1].getBoundingBox().getX()*/ + MIN_GAP +(int) (Math.random() * (MAX_GAP - MIN_GAP));
+			}
+			int random = (int) (Math.random()*3);
+			
+			// Pour qu'il y ait environ 2 voitures pour 1 camion
+			if (random > 0)
 				laneObj[i] = new Car(sprite, direction, initialX, LaneInitialY[this.laneID]);
 			else
 				laneObj[i] = new Truck(sprite, direction, initialX, LaneInitialY[this.laneID]);
@@ -33,6 +37,7 @@ public class RoadLane extends Lane {
 
 	}
 
+	@Override
 	public LaneObject[] getLaneObj() {
 		return laneObj;
 	}
