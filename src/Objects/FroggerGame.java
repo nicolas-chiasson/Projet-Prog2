@@ -57,8 +57,9 @@ public class FroggerGame {
 		setLevel(1);
 
 		// Mise a jour des lanes 20 fois avant le depart du jeu
-		for (int t = 0; t < 20; t++) 
+		for (int t = 0; t < 20; t++) {
 			update();
+		}
 
 		// Depart du jeu, le temps initial est note
 		startLifeTime = (int) System.currentTimeMillis();
