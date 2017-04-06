@@ -26,16 +26,7 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 	public static final int HEIGHT = 600;
 	public static final int WIDTH = 720;
 
-	Image truck, car, sLog, mLog, bLog;
-
 	private FroggerGame game;
-	private BufferedImage sprite;
-	private int dx = 0;
-	private int dy = 10;
-	private int posX, posY = 50;
-	private int VelX, VelY = 0;
-
-	Timer time = new Timer();
 
 	public FroggerPanel() {
 
@@ -51,12 +42,6 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 			System.err.println("Error creating thread.");
 			e.printStackTrace();
 			System.exit(-2);
-		}
-
-		try {
-			sprite = ImageIO.read(new File("src/resources/sprite.png"));
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
 		}
 
 		setOpaque(false);
