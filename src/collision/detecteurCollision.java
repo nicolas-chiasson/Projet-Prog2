@@ -26,8 +26,6 @@ public class detecteurCollision {
 		return false;
 	}
 	
-	
-	// Water lane ID go from 7 to 11
 	public static boolean logCheck(Frog frog, Lane[] items){
 		boolean touchFlag = false;
 		inter = new Area();
