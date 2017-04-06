@@ -17,8 +17,8 @@ import Objects.FroggerGame;
 
 public class AddScoreWindow extends JFrame implements ActionListener {
 	
+	private static final long serialVersionUID = 1L;
 	private int score;
-	private boolean doneFlag = false;
 	protected FileWriter fw, fwNames;
 	protected JTextField scoreName;
 	protected JLabel scoreLabel, beauTravail;
@@ -31,7 +31,7 @@ public class AddScoreWindow extends JFrame implements ActionListener {
 		super.setSize(400, 250);
 		setFocusable(true);
 		setLocationRelativeTo(null);
-		//setUndecorated(true);
+		setUndecorated(true);
 
 		setLayout(null);
 		setResizable(false);
@@ -85,7 +85,6 @@ public class AddScoreWindow extends JFrame implements ActionListener {
 				
 				out.close();
 				out2.close();
-				doneFlag = true;
 			
 			} catch (IOException d) {
 				d.printStackTrace();
@@ -96,10 +95,6 @@ public class AddScoreWindow extends JFrame implements ActionListener {
 			sWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			sWindow.setVisible(true);
 		}
-	}
-	
-	public boolean getDoneFlag(){
-		return doneFlag;
 	}
 
 }

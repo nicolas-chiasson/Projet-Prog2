@@ -66,8 +66,7 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 
 	}
 
-	// on dessine les �l�ments sur le terrain, suffit de les faire bouger
-	// maintenant
+
 	@Override
 	public void paint(Graphics g) {
 
@@ -87,53 +86,43 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 		g.drawString("Score: "+ game.getScore(), 15,35);
 
 		for (int i = 0; i < 5; i++) {
-			// show cars in roadlanes
+			
 			for (int j = 0; j < Lane.NB_OBJ_PER_LANE; j++) {
 				
 				LaneObject currentObj = game.getRoadLanes()[i].laneObj[j];
 				
-				if (game.getRoadLanes()[i].getDirection() == Lane.LEFT 
-				&& currentObj.getBoundingBox().getX() + currentObj.getBoundingBox().getWidth() < 0)
-					game.getRoadLanes()[i].laneObj[j].move(currentObj.getInitialX() + (int) currentObj.getBoundingBox().getWidth(),
-														   currentObj.getPosY());
+				if (game.getRoadLanes()[i].getDirection() == Lane.LEFT && currentObj.getBoundingBox().getX() + currentObj.getBoundingBox().getWidth()  < -30)
+					currentObj.move(FroggerPanel.WIDTH+Lane.LEFT_LANE_RESTART+(int)currentObj.getBoundingBox().getWidth(), currentObj.getPosY());
 
-				if (game.getRoadLanes()[i].getDirection() == Lane.RIGHT
-				&& currentObj.getPosX() > FroggerPanel.WIDTH)
-					currentObj.move(currentObj.getInitialX()
-									- (int) currentObj.getBoundingBox().getWidth(),
-							game.getRoadLanes()[i].laneObj[j].getPosY());
+				if (game.getRoadLanes()[i].getDirection() == Lane.RIGHT && currentObj.getPosX() > FroggerPanel.WIDTH)
+					currentObj.move(Lane.RIGHT_LANE_RESTART, currentObj.getPosY());
 
-				g.drawImage(game.getRoadLanes()[i].getLaneObj()[j].MovingObject,
-						game.getRoadLanes()[i].laneObj[j].getPosX(), RoadLane.LaneInitialY[i], null);
-
+			
+				g.drawImage(currentObj.MovingObject,currentObj.getPosX(), currentObj.getPosY(), null);
 				// Rectangle r = game.getRoadLanes()[i].getLaneObj()[j].getBoundingBox(); g.drawRect((int) r.getX(),(int) r.getY(),(int)r.getWidth(),(int) r.getHeight());
 
 			}
-			// show logs in water lanes
+			
 			for (int d = 0; d < Lane.NB_OBJ_PER_LANE; d++) {
 				
 				LaneObject currentObj = game.getWaterLanes()[i].laneObj[d];
 
-				if (game.getWaterLanes()[i].getDirection() == Lane.LEFT
-				 && currentObj.getBoundingBox().getX()+ currentObj.getBoundingBox().getWidth() < 0)
-				{
-					currentObj.move(currentObj.getInitialX() + (int) currentObj.getBoundingBox().getWidth(), currentObj.getPosY());
-				}
+				if (game.getWaterLanes()[i].getDirection() == Lane.LEFT && currentObj.getBoundingBox().getX()+ currentObj.getBoundingBox().getWidth() < -30)
+					currentObj.move(FroggerPanel.WIDTH+Lane.LEFT_LANE_RESTART+(int)currentObj.getBoundingBox().getWidth(), currentObj.getPosY());
+				
 				
 				if (game.getWaterLanes()[i].getDirection() == Lane.RIGHT && currentObj.getPosX() > FroggerPanel.WIDTH)
-					currentObj.move(currentObj.getInitialX(), currentObj.getPosY());
+					currentObj.move(Lane.RIGHT_LANE_RESTART, currentObj.getPosY());
 
 				g.drawImage(game.getWaterLanes()[i].getLaneObj()[d].MovingObject,game.getWaterLanes()[i].laneObj[d].getPosX(), game.getWaterLanes()[i].LaneInitialY[i], null);
-				//Rectangle rl = game.getWaterLanes()[i].getLaneObj()[d].getBoundingBox();
-				//g.drawRect((int) rl.getX(), (int) rl.getY(), (int) rl.getWidth(), (int) rl.getHeight());
+				//Rectangle rl = game.getWaterLanes()[i].getLaneObj()[d].getBoundingBox();g.drawRect((int) rl.getX(), (int) rl.getY(), (int) rl.getWidth(), (int) rl.getHeight());
 
 			}
 
 		}
 
 	    g.drawImage(game.getFrog().MovingObject, game.getFrog().getPosX(), game.getFrog().getPosY(), null);
-	//	Rectangle fr = game.getFrog().getBoundingBox();
-	//	g.drawRect((int) fr.getX(), (int) fr.getY(), (int) fr.getWidth(), (int) fr.getHeight());
+	//	Rectangle fr = game.getFrog().getBoundingBox(); g.drawRect((int) fr.getX(), (int) fr.getY(), (int) fr.getWidth(), (int) fr.getHeight());
 
 	}
 
@@ -158,21 +147,21 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 
 	@Override
 	public void run() {
-		//AddScoreWindow scorePanel = new AddScoreWindow();
-		boolean waitFlag = false;
-		
+
 		while (true) {
 			update();
 			repaint();
 		
 				if (FroggerGame.DEAD) {
-					AddScoreWindow scorePanel = new AddScoreWindow(game.getScore());
+					
+					new AddScoreWindow(game.getScore());
 
 					FroggerGame.DEAD = false;
 					reset();
 					
 				}
 				if (FroggerGame.WIN) {
+					
 					game.updateScore();
 					game.setLevel(game.getLevel() + 1);
 					game.resetTime((int) System.currentTimeMillis());
@@ -185,7 +174,6 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

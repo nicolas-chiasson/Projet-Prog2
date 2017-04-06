@@ -29,11 +29,9 @@ public class Log extends LaneObject {
 
 		}
 		
-		this.initialX = initialX;
 		this.posX=initialX;
 		this.posY=initialY;
 	}
-
 
 	
 	@Override
@@ -46,13 +44,6 @@ public class Log extends LaneObject {
 			this.boundingBox = new Rectangle(posX+10, posY + 25, 175, 40);
 		else		
 			this.boundingBox = new Rectangle(posX+10, posY + 25, 250, 40);
-		/*if(size == SMALL)
-			this.boundingBox = new Rectangle(posX, posY + 16, 125, 50);
-		else if(size == MEDIUM)
-			this.boundingBox = new Rectangle(posX, posY + 16, 200, 50);
-		else		
-			this.boundingBox = new Rectangle(posX, posY + 16, 275, 50);
-		*/	
 
 	}
 	
@@ -64,17 +55,12 @@ public class Log extends LaneObject {
 	public int getPosY() {
 		return posY;
 	}
-	@Override
-	public int getInitialX()
-	{
-		return initialX;
-	}
-
 
 	@Override
 	public Rectangle getBoundingBox() {
 		// TODO Auto-generated method stub
 		return boundingBox;
 	}
+
 
 }

@@ -2,10 +2,12 @@ package Objects;
 
 public class Lane {
 
-	public static final int NB_OBJ_PER_LANE = 3;
+	public static final int NB_OBJ_PER_LANE = 2;
 	public static final int RIGHT = 0, LEFT = 1;
-	public static final int MAX_GAP = 300;
-	public static final int MIN_GAP = 400;
+	public static final int MAX_GAP = 450;
+	public static final int MIN_GAP = 550;
+	public static final int RIGHT_LANE_RESTART = -300;
+	public static final int LEFT_LANE_RESTART = 300;
 	
 	protected int laneID;
 	protected int speed;

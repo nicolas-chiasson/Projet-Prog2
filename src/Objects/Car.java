@@ -12,6 +12,7 @@ public class Car extends LaneObject {
 		int randomCar = (int) (Math.random()*3);
 		if(direction == Lane.RIGHT)
 		{
+			
 			if(randomCar == 0)
 				MovingObject = sprite.getSubimage(300, 480, 145, 75).getScaledInstance(135, 55, Image.SCALE_DEFAULT);
 			else if(randomCar == 1)
@@ -22,6 +23,7 @@ public class Car extends LaneObject {
 		}
 		else
 		{
+
 			if(randomCar == 0)
 				MovingObject = sprite.getSubimage(160, 7, 145, 75).getScaledInstance(135, 55, Image.SCALE_DEFAULT);
 			else if(randomCar == 1)
@@ -30,7 +32,7 @@ public class Car extends LaneObject {
 				MovingObject = sprite.getSubimage(445, 9, 145, 60).getScaledInstance(135, 55, Image.SCALE_DEFAULT);
 
 		}
-		this.initialX = initialX;
+		
 		move(initialX,initialY);
 	}
 
@@ -48,15 +50,6 @@ public class Car extends LaneObject {
 	@Override
 	public int getPosY() {
 		return posY;
-	}
-	@Override
-	public int getInitialX()
-	{
-		return initialX;
-	}
-	//TODO: trouver les dimensions exactes du sprite de l'auto pour avoir la bonne boite
-	public void setBox(int x, int y){
-		this.boundingBox = new Rectangle(x+7, y+9, 24, 24);
 	}
 
 	@Override

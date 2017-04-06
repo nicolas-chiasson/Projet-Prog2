@@ -15,7 +15,7 @@ public class FroggerGame {
 	public static boolean DEAD = false;
 	public static boolean WIN = false;
 	public static final int frogInitialX = 270, frogInitialY = 612;
-	protected int lives, startLifeTime, timeLeft, laneSpeed, level;
+	protected int lives, startLifeTime, laneSpeed, level;
 	protected static int score;
 
 	private Frog frog;
@@ -28,6 +28,7 @@ public class FroggerGame {
 		lives = 3;
 		score = 0;
 		
+		// Ouverture des fichiers sprite pour aller chercher les images des objets
 		try {
 			sprite = ImageIO.read(new File("src/resources/sprite.png"));
 			sprite_r = ImageIO.read(new File("src/resources/sprite_reverse.png"));
@@ -35,14 +36,14 @@ public class FroggerGame {
 			System.out.println(e.getMessage());
 		}
 
+		// Creation de la grenouille et placement a la case initiale
 		frog = new Frog(sprite, sprite_r);
 		frog.move(frogInitialX, frogInitialY);
 
-		// log and car lanes -------------
+		// Creation des lanes
 		roadLanes = new RoadLane[5];
 		waterLanes = new WaterLane[5];
 
-		// Creation des lanes
 		for (int i = 0; i < roadLanes.length; i++) {
 			if (i % 2 == 1) {
 				waterLanes[i] = new WaterLane(sprite, i, 1, Lane.RIGHT);
@@ -55,13 +56,49 @@ public class FroggerGame {
 
 		setLevel(1);
 
-		for (int t = 0; t < 500; t++) // calls update on all lanes before
+		// Mise a jour des lanes 20 fois avant le depart du jeu
+		for (int t = 0; t < 20; t++) 
 			update();
 
+		// Depart du jeu, le temps initial est note
 		startLifeTime = (int) System.currentTimeMillis();
 
 	}
 
+
+	public int getLevel() {
+		return level;
+	}
+
+	public WaterLane[] getWaterLanes() {
+		return waterLanes;
+	}
+
+	public RoadLane[] getRoadLanes() {
+		return roadLanes;
+	}
+
+
+	public int getLives() {
+		return lives;
+	}
+
+	public Frog getFrog() {
+		return frog;
+	}
+
+	
+	public int getTimeLeft() {
+		//timeLeft = (int) (MAX_LIFE_TIME - 0.001 * ((int) System.currentTimeMillis() - startLifeTime));
+		return (int) (MAX_LIFE_TIME - 0.001 * ((int) System.currentTimeMillis() - startLifeTime));
+
+	}
+
+	public int getScore() {
+
+		return score;
+	}
+	
 	public void setLevel(int lvl) {
 		level = lvl;
 		laneSpeed = lvl + 2;
@@ -73,60 +110,34 @@ public class FroggerGame {
 
 		}
 	}
-
-	public int getLevel() {
-		return level;
+	
+	void setScore(int score) {
+		FroggerGame.score = score;
 	}
-
-	public WaterLane[] getWaterLanes() {
-		return waterLanes;
-	}
-
-	public void setWaterLanes(WaterLane[] waterLanes) {
-		this.waterLanes = waterLanes;
-	}
-
-	public RoadLane[] getRoadLanes() {
-		return roadLanes;
-	}
-
-	public void setRoadLanes(RoadLane[] roadLanes) {
-		this.roadLanes = roadLanes;
-	}
-
-	void update() {
-		{
-
-			for (int u = 0; u < roadLanes.length; u++) {
-				roadLanes[u].update();
-				waterLanes[u].update();
-			}
-			runChecks();
-		}
-	}
-
-	public int getLives() {
-		return lives;
-	}
-
-	public Frog getFrog() {
-		return frog;
-	}
-
-	public int getTimeLeft() {
-		timeLeft = (int) (MAX_LIFE_TIME - 0.001 * ((int) System.currentTimeMillis() - startLifeTime));
-		if (timeLeft <= 0)
-			timeLeft = 0;
-		return timeLeft;
-
-	}
-
+	
 	public void resetTime(int newStartTime) {
 		startLifeTime = newStartTime;
 	}
 	
+	
+	void update() {
+		{
+			// Mise a jour de tous les water lanes et road lanes
+			for (int u = 0; u < roadLanes.length; u++) {
+				roadLanes[u].update();
+				waterLanes[u].update();
+			}
+			// Verification de collision
+			carCheck();
+			logCheck();
+			
+			// Verification si le joueur a remporte le niveau
+			checkifThePlayerWin();
+		}
+	}
+	
 	public void updateScore(){
-		score += timeLeft*level;
+		score += getTimeLeft()*level;
 	}
 	
 	void playerDeath() {
@@ -135,13 +146,13 @@ public class FroggerGame {
 		frog.setFrogImageUp();
 		frog.setCurrentLane(0);
 
-		if ( lives <= 0 || timeLeft == 0 ) {
+		if ( lives <= 0 || getTimeLeft() <= 0 ) {
 			DEAD = true;
 		}
 	}
 
 	void carCheck() {
-		// Tue le joueur quand une collision n'est pas detectee
+		// Tue le joueur quand une collision n'est pas detectee (et que la grenouille est dans les water lanes)
 		if (detecteurCollision.carCheck(this.getFrog(), this.getRoadLanes())) {
 			playerDeath();
 		}
@@ -154,7 +165,7 @@ public class FroggerGame {
 	}
 
 	void checkifThePlayerWin() {
-		if (this.frog.getPosY() < 10) {
+		if (frog.getPosY() < 10) {
 			WIN = true;
 			frog.move(frogInitialX, frogInitialY);
 			frog.setFrogImageUp();
@@ -162,20 +173,7 @@ public class FroggerGame {
 		}
 	}
 
-	void setScore(int score) {
-		FroggerGame.score = score;
-	}
 
-	public int getScore() {
 
-		return score;
-	}
-
-	void runChecks() {
-		carCheck();
-		logCheck();
-		checkifThePlayerWin();
-
-	}
 
 }

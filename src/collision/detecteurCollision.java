@@ -38,16 +38,16 @@ public class detecteurCollision {
 					inter = new Area(item.getLaneObj()[i].getBoundingBox());
 					inter.intersect(new Area(frog.getBoundingBox()));
 						
-				if(!inter.isEmpty())
+				if(!inter.isEmpty() && inter.getBounds().getWidth()>20)
 				{
 					touchFlag = true;
 
 					if(item.getDirection() == Lane.LEFT)
 						frog.moveLeftOnLog(item.getSpeed());
-						//frog.move((int) item.getLaneObj()[i].getBoundingBox().getX()+(int) (item.getLaneObj()[i].getBoundingBox().getWidth()/2) , frog.getPosY());
 					else	
 						frog.moveRightOnLog(item.getSpeed());
-						//frog.move((int)(frog.getBoundingBox().getWidth()/2)+(int) item.getLaneObj()[i].getBoundingBox().getX()+(int) (item.getLaneObj()[i].getBoundingBox().getWidth()/2) -(int)(frog.getBoundingBox().getWidth()/2), frog.getPosY());
+					
+					break;
 				}
 			}
 			

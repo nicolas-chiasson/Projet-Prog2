@@ -6,7 +6,8 @@ public class RoadLane extends Lane {
 
 	public static final int[] LaneInitialY = { 592, 540, 488, 430, 375 };
 
-	public RoadLane(BufferedImage sprite, int laneID, int speed, int direction) {
+	public RoadLane(BufferedImage sprite, int laneID, int speed, int direction)
+	{
 		super(laneID, speed, direction);
 
 		// Speficie la position X initiale dependant de la direction
@@ -22,10 +23,11 @@ public class RoadLane extends Lane {
 			if(i>0)
 			{
 				if (direction == Lane.LEFT)
-					initialX +=  /*laneObj[i-1].getBoundingBox().getMaxX()*/ + MIN_GAP + (int) (Math.random() * (MAX_GAP - MIN_GAP));
+					initialX += MIN_GAP + (int) (Math.random() * (MAX_GAP - MIN_GAP));
 				else
-					initialX -= /*laneObj[i-1].getBoundingBox().getX()*/ + MIN_GAP +(int) (Math.random() * (MAX_GAP - MIN_GAP));
+					initialX -=  MIN_GAP +(int) (Math.random() * (MAX_GAP - MIN_GAP));
 			}
+			
 			int random = (int) (Math.random()*3);
 			
 			// Pour qu'il y ait environ 2 voitures pour 1 camion

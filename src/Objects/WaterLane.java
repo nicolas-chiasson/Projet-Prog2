@@ -7,7 +7,8 @@ public class WaterLane extends Lane {
 	protected int[] LaneInitialY = { 250, 195, 140, 85, 30 };
 	
 
-	public WaterLane(BufferedImage sprite, int laneID, int speed, int direction) {
+	public WaterLane(BufferedImage sprite, int laneID, int speed, int direction)
+	{
 		super(laneID, speed, direction);
 
 		// specifie la position X initiale dependant de la direction
@@ -44,9 +45,6 @@ public class WaterLane extends Lane {
 		return laneObj;
 	}
 
-	public void setLaneObj(LaneObject[] laneObj) {
-		this.laneObj = laneObj;
-	}
 
 	public void update() {
 		for (int i = 0; i < NB_OBJ_PER_LANE; i++) {
@@ -56,6 +54,6 @@ public class WaterLane extends Lane {
 				laneObj[i].move(laneObj[i].getPosX() - speed, laneObj[i].getPosY());}
 		}
 	}
+	
 
-	}
-
+}

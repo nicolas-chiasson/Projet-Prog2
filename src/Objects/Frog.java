@@ -19,7 +19,20 @@ public class Frog extends MovableObject {
 		MovingObject = frogUp;
 		currentLane = 0;
 	}
+	
+	public int getPosX() {
+		return posX;
+	}
 
+	public int getPosY() {
+		return posY;
+	}
+
+
+	public Rectangle getBoundingBox() {
+		return this.boundingBox;
+	}
+	
 	public int getCurrentLane() {
 		return currentLane;
 	}
@@ -28,19 +41,20 @@ public class Frog extends MovableObject {
 		this.currentLane = currentLane;
 	}
 
-	@Override
-	public void move(int x, int y) {
-		this.posX = x;
-		this.posY = y;
-		this.boundingBox = new Rectangle(x + 15, y + 40, 50, 40);
-	}
-
 	public void setFrogImageUp() {
 		MovingObject = frogUp;
 	}
 
 	public void setFrogImageDown() {
 		MovingObject = frogDown;
+	}
+
+
+	@Override
+	public void move(int x, int y) {
+		this.posX = x;
+		this.posY = y;
+		this.boundingBox = new Rectangle(x + 15, y + 40, 50, 40);
 	}
 
 	void up() {
@@ -87,19 +101,5 @@ public class Frog extends MovableObject {
 
 	}
 
-	public int getPosX() {
-		return posX;
-	}
 
-	public int getPosY() {
-		return posY;
-	}
-
-	public void setBox(int x, int y) {
-		this.boundingBox = new Rectangle(x + 7, y + 9, 24, 24);
-	}
-
-	public Rectangle getBoundingBox() {
-		return this.boundingBox;
-	}
 }

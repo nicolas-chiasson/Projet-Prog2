@@ -8,7 +8,6 @@ public abstract class MovableObject {
 	
 	protected int posX, posY;
 	protected Image MovingObject;
-	protected int direction;
 	protected Rectangle boundingBox;
 
 	public void move(int x, int y) {

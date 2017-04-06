@@ -9,13 +9,11 @@ public class Truck extends LaneObject {
 	
 	public Truck(BufferedImage sprite, int direction, int initialX, int initialY)
 	{
-		
 		if(direction == Lane.RIGHT)
 			MovingObject = sprite.getSubimage(200, 400, 300, 75).getScaledInstance(200, 55, Image.SCALE_DEFAULT);
 		else
 			MovingObject = sprite.getSubimage(130, 80, 145, 75).getScaledInstance(200, 55, Image.SCALE_DEFAULT);
-
-		this.initialX = initialX;
+		
 		move(initialX,initialY);
 	}
 
@@ -25,8 +23,6 @@ public class Truck extends LaneObject {
 		posY = y;
 		boundingBox = new Rectangle(x, y+8, 200, 50);
 	}
-
-
 	
 	@Override
 	public int getPosX() {
@@ -36,11 +32,6 @@ public class Truck extends LaneObject {
 	public int getPosY() {
 		return posY;
 	}
-	@Override
-	public int getInitialX(){
-		return initialX;
-	}
-	
 
 	@Override
 	public Rectangle getBoundingBox() {
