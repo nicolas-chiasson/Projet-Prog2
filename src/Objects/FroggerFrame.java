@@ -31,16 +31,6 @@ public class FroggerFrame extends JFrame implements ActionListener {
 		}
 
 		setContentPane(new JLabel(new ImageIcon(backgroundIMG)));
-
-		/*
-		 * JLabel background = new JLabel(new ImageIcon(this.backgroundIMG));
-		 * JLabel background = new JLabel() { public void
-		 * paintComponent(Graphics g) { g.drawImage(backgroundIMG, 0, 0, null);
-		 * super.paintComponent(g); } }; background.setOpaque(false);
-		 * add(background); background.setLayout(new BorderLayout());
-		 * 
-		 * background.setSize(600,700);
-		 */
 		setLocationRelativeTo(null);
 
 		// creates the panel
