@@ -43,13 +43,5 @@ public class Lane {
 	public LaneObject[] getLaneObj() {
 		return laneObj;
 	}
-	
-
-	
-	
-
-
-	
-	
-	
+		
 }
