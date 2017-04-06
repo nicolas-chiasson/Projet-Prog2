@@ -70,14 +70,14 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 	@Override
 	public void paint(Graphics g) {
 
-		g.setFont(new Font("Arial", Font.CENTER_BASELINE, 20));
+		g.setFont(new Font("Arial Unicode MS", Font.CENTER_BASELINE, 20));
 		int time = game.getTimeLeft();
 		g.drawString("Level " + game.getLevel() + ": Time Left: " + time, 10, getHeight() - 50);
 
 		g.drawString("Lives: ", 400, getHeight() - 50);
 		g.setColor(Color.RED);
 		for (int i = 0; i < game.getLives(); i++) {
-			g.drawString("♥", 500 + i * 30, getHeight() - 50);
+			g.drawString("\u2764", 500 + i * 30, getHeight() - 50);
 		}
 		
 		g.setColor(Color.WHITE);
@@ -99,7 +99,7 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 
 			
 				g.drawImage(currentObj.MovingObject,currentObj.getPosX(), currentObj.getPosY(), null);
-				// Rectangle r = game.getRoadLanes()[i].getLaneObj()[j].getBoundingBox(); g.drawRect((int) r.getX(),(int) r.getY(),(int)r.getWidth(),(int) r.getHeight());
+				
 
 			}
 			
@@ -115,14 +115,14 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 					currentObj.move(Lane.RIGHT_LANE_RESTART, currentObj.getPosY());
 
 				g.drawImage(game.getWaterLanes()[i].getLaneObj()[d].MovingObject,game.getWaterLanes()[i].laneObj[d].getPosX(), game.getWaterLanes()[i].LaneInitialY[i], null);
-				//Rectangle rl = game.getWaterLanes()[i].getLaneObj()[d].getBoundingBox();g.drawRect((int) rl.getX(), (int) rl.getY(), (int) rl.getWidth(), (int) rl.getHeight());
+				
 
 			}
 
 		}
 
 	    g.drawImage(game.getFrog().MovingObject, game.getFrog().getPosX(), game.getFrog().getPosY(), null);
-	//	Rectangle fr = game.getFrog().getBoundingBox(); g.drawRect((int) fr.getX(), (int) fr.getY(), (int) fr.getWidth(), (int) fr.getHeight());
+	
 
 	}
 
@@ -188,16 +188,5 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 		game = new FroggerGame();
 	}
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
