@@ -14,8 +14,7 @@ import javax.swing.KeyStroke;
 @SuppressWarnings("serial")
 public class ScoreWindow extends JFrame {
 
-	// on d�clare la taille de la fenetre pour changer ces valeurs plus
-	// facilement
+	// on declare la taille de la fenetre pour changer ces valeurs plus facilement
 	protected int width = 700;
 	protected int height = 800;
 
