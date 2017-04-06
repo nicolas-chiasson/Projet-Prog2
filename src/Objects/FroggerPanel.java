@@ -187,6 +187,16 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 	public void reset() {
 		game = new FroggerGame();
 	}
+	
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+
+	}
 
 
 }
