@@ -55,39 +55,46 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 	@Override
 	public void paint(Graphics g) {
 
+		// Affichage du niveau, temps et des vies
 		g.setFont(new Font("Arial Unicode MS", Font.CENTER_BASELINE, 20));
 		int time = game.getTimeLeft();
-		g.drawString("Level " + game.getLevel() + ": Time Left: " + time, 10, getHeight() - 50);
+		g.drawString("Level " + game.getLevel() + ": Time Left: " + time, 10, getHeight() - 40);
 
-		g.drawString("Lives: ", 400, getHeight() - 50);
+		g.drawString("Lives: ", 400, getHeight() - 40);
 		g.setColor(Color.RED);
 		for (int i = 0; i < game.getLives(); i++) {
-			g.drawString("\u2764", 500 + i * 30, getHeight() - 50);
+			g.drawString("\u2764", 500 + i * 30, getHeight() - 40);
 		}
 		
+		
+		// Affichage du score
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Arial", Font.CENTER_BASELINE, 32));
-
 		g.drawString("Score: "+ game.getScore(), 15,35);
 
+		
+		// Affichage des objets sur les lanes
 		for (int i = 0; i < 5; i++) {
 			
+			// Affichage des objets sur les routes
 			for (int j = 0; j < Lane.NB_OBJ_PER_LANE; j++) {
 				
 				LaneObject currentObj = game.getRoadLanes()[i].laneObj[j];
 				
+				// Si les objets dépasse le panel, on les fait repartir 
 				if (game.getRoadLanes()[i].getDirection() == Lane.LEFT && currentObj.getBoundingBox().getX() + currentObj.getBoundingBox().getWidth()  < -30)
 					currentObj.move(FroggerPanel.WIDTH+Lane.LEFT_LANE_RESTART+(int)currentObj.getBoundingBox().getWidth(), currentObj.getPosY());
 
 				if (game.getRoadLanes()[i].getDirection() == Lane.RIGHT && currentObj.getPosX() > FroggerPanel.WIDTH)
 					currentObj.move(Lane.RIGHT_LANE_RESTART, currentObj.getPosY());
 
-			
+				// Affichage de l'image
 				g.drawImage(currentObj.MovingObject,currentObj.getPosX(), currentObj.getPosY(), null);
 				
 
 			}
 			
+			// Affichage des objets sur l'eau	
 			for (int d = 0; d < Lane.NB_OBJ_PER_LANE; d++) {
 				
 				LaneObject currentObj = game.getWaterLanes()[i].laneObj[d];
@@ -137,25 +144,20 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 			update();
 			repaint();
 		
-				if (FroggerGame.DEAD) {
-					
+				if (FroggerGame.DEAD) {		
 					new AddScoreWindow(game.getScore());
-
 					FroggerGame.DEAD = false;
-					reset();
-					
+					reset();			
 				}
-				if (FroggerGame.WIN) {
-					
+				// Si le joueur gagne, il repart a la position initiale
+				if (FroggerGame.WIN) {	
 					game.updateScore();
 					game.setLevel(game.getLevel() + 1);
-					game.resetTime((int) System.currentTimeMillis());
-					
+					game.resetTime((int) System.currentTimeMillis());		
 					FroggerGame.WIN = false;
 				}
 				
-		
-				
+			// Pause de 20 ms
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
@@ -165,10 +167,11 @@ public class FroggerPanel extends JPanel implements KeyListener, Runnable {
 		}
 	}
 
+	// Mise a jour de la partie
 	public void update() {
 		game.update();
 	}
-
+	
 	public void reset() {
 		game = new FroggerGame();
 	}

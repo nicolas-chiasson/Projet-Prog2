@@ -29,6 +29,8 @@ public class detecteurCollision {
 	public static boolean logCheck(Frog frog, Lane[] items){
 		boolean touchFlag = false;
 		inter = new Area();
+		
+		// On verifie d'abord si la grenouille se situe dans un couloir d'eau (entre 7 et 11)
 		if(frog.getCurrentLane()>=7 && frog.getCurrentLane()<=11)
 		{
 			for(Lane item : items){
