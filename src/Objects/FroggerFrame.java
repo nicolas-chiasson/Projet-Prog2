@@ -33,22 +33,12 @@ public class FroggerFrame extends JFrame implements ActionListener {
 		setContentPane(new JLabel(new ImageIcon(backgroundIMG)));
 		setLocationRelativeTo(null);
 
-		// creates the panel
+		// Creation du Panel contenant le background et les objects
 		panel = new FroggerPanel();
-		// gets the frames insets
-		Insets frameInsets = getInsets();
-		// calculates panel size
-		int frameWidth = panel.getWidth() + (frameInsets.left + frameInsets.right);
-		int frameHeight = panel.getHeight() + (frameInsets.top + frameInsets.bottom);
-		// sets the frame's size
-		//setPreferredSize(new Dimension(frameWidth, frameHeight));
-		// turns off the layout options
+		
 		setLayout(null);
-		// adds the panel to the frame
 		add(panel);
-		// adjusts the window to meet its new preferred size
 		pack();
-		// shows the frame
 		setVisible(true);
 		
 	}
