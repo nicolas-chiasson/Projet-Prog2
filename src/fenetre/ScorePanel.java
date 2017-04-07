@@ -27,13 +27,14 @@ public class ScorePanel extends JPanel implements ActionListener {
 		setOpaque(false);
 		setLayout(null);
 
-		JLabel team = new JLabel("Recent Scores", SwingConstants.CENTER);
+		JLabel team = new JLabel("High Scores", SwingConstants.CENTER);
 		team.setFont(new Font("Arial", Font.BOLD, 32));
 		team.setBounds(0, 0, 300, 100);
 		team.setLocation(640 / 2 - team.getWidth() / 2 + 50, 45);
 		team.setForeground(new Color(251, 12, 8));
 		add(team);
 
+		ArrayList<Integer> allScoresInt = new ArrayList<>();
 		ArrayList<String> allScores = new ArrayList<>();
 		ArrayList<String> allNames = new ArrayList<>();
 
@@ -45,6 +46,7 @@ public class ScorePanel extends JPanel implements ActionListener {
 			String line;
 			while((line = br.readLine()) != null) {
 				allScores.add(line);
+				allScoresInt.add(Integer.parseInt(line));
 			}
 
 			while((line = brNames.readLine()) != null) {
@@ -59,25 +61,30 @@ public class ScorePanel extends JPanel implements ActionListener {
 			e1.printStackTrace();
 		}
 
-		for(int i = allNames.size()-1, pixel = 0 ; i>=0 && i>= allNames.size()-10 ; i--, pixel++)
+		
+		// tri des scores
+		ArrayList<Integer> sortedIndices = scoreSort(allScoresInt);
+		
+		
+		for(int i = 0; i < allNames.size() && i<10 ; i++)
 		{
-			JLabel newName = new JLabel(allNames.get(i), SwingConstants.LEFT);
+			JLabel newName = new JLabel(allNames.get(sortedIndices.get(i)), SwingConstants.LEFT);
 			newName.setBounds(0,0,400,50);
-			newName.setLocation(140, 120 + pixel * 60);
+			newName.setLocation(140, 120 + i * 60);
 			newName.setFont(new Font("Arial", Font.BOLD, 20));
 			add(newName);
 		}
 
-		for(int i = allScores.size()-1, pixel = 0 ; i>=0 && i>= allScores.size()-10; i--, pixel++)
+		for(int i = 0 ; i < allScores.size() && i<10 ; i++)
 		{
-			JLabel newScore = new JLabel(allScores.get(i), SwingConstants.CENTER);
+			JLabel newScore = new JLabel(allScores.get(sortedIndices.get(i)), SwingConstants.CENTER);
 			newScore.setBounds(0,0,400,50);
-			newScore.setLocation(300,(120 + pixel * 60));
+			newScore.setLocation(300,(120 + i * 60));
 			newScore.setFont(new Font("Arial", Font.BOLD, 20));
 			add(newScore);
-		}
-
-
+		}		
+		
+	
 		back = new JButton("Back");
 		back.addActionListener(this);
 		back.setBounds(0, 0, 120, 40);
@@ -93,4 +100,46 @@ public class ScorePanel extends JPanel implements ActionListener {
 		}
 	}
 
+	
+	public static ArrayList<Integer> scoreSort(ArrayList<Integer> scores)
+	{
+		ArrayList<Integer> sortedIndices = new ArrayList<Integer>();
+		
+		// Initialisation du sortedIndices 
+		for(int count = 0 ; count<scores.size() ; count++)
+			sortedIndices.add(count);
+		
+		
+		for(int i = 0 ; i<scores.size()-1; i++)
+		{
+			int maxValue = scores.get(i);
+			int maxI =i;
+			int maxIndex = sortedIndices.get(i);
+			
+			// On trouve le plus grand score et on retient son index (initial et actuel)
+			for(int j = i ; j<scores.size(); j++)
+			{
+				if(scores.get(j) > maxValue)
+				{
+					maxValue = scores.get(j);
+					maxIndex = sortedIndices.get(j); // Index initial
+					maxI = j; //Index actuel
+				}
+			}
+			// Swap le max avec la premiere valeur
+			int temp = scores.get(i);
+			scores.set(i, maxValue);
+			scores.set(maxI, temp);
+			
+			// Swap des index du max et de la premier valeur
+			int tempIndex = sortedIndices.get(i);
+			sortedIndices.set(i, maxIndex);
+			sortedIndices.set(maxI, tempIndex);
+
+		}
+
+		
+		
+		return sortedIndices;
+	}
 }

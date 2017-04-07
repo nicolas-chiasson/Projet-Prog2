@@ -55,7 +55,7 @@ public class FenetreMenu extends JFrame implements ActionListener {
 		this.Start.setOpaque(true);
 		add(this.Start);
 
-		this.HighScore = new JButton("Recent Scores");
+		this.HighScore = new JButton("High Scores");
 		this.HighScore.addActionListener(this);
 		this.HighScore.setBorder(emptyBorder);
 		this.HighScore.setBounds(200, 250, 120, 40);
